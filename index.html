@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <title>Shopping Cart</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+      <link href="style.css" rel="stylesheet">
+   </head>
+
+   <body>
+
+      <section>
+         <div class="container" id="order">
+            <div class="cart">
+               <div class="col-md-12 col-lg-10 mx-auto">
+                  <div class="cart-item" id="firstItem">
+                     <div class="row">
+                        <div class="col-md-7 center-item">
+                           <img src="images/product-1.png" alt="">
+                           <h5>iPhone 11 128GB Black</h5>
+                        </div>
+
+                        <div class="col-md-5 center-item">
+                           <div class="input-group number-spinner">
+                              <button class="btn btn-default"><i class="fas fa-minus" id="-btn1st"></i></button>
+                              <input type="text" id="firstInput" class="form-control text-center quantity" value="1">
+                              <button class="btn btn-default"><i class="fas fa-plus" id="+btn1st"></i></button>
+                           </div>
+                           <h5>$ <span id="firstCost">1219</span> </h5>
+                           <img src="images/remove.png" alt="" class="remove-item" id="firstRemove">
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="cart-item" id="secondItem">
+                     <div class="row">
+                        <div class="col-md-7 center-item mx-auto">
+                           <img src="images/product-2.png" alt="">
+                           <h5>iPhone 11 Silicone Case - Black</h5>
+                        </div>
+                        <div class="col-md-5 center-item">
+                           <div class="input-group number-spinner">
+                              <button class="btn btn-default"><i class="fas fa-minus" id="-btn2nd"></i></button>
+                              <input type="text" id="secondInput" class="form-control text-center quantity" value="1">
+                              <button class="btn btn-default"><i class="fas fa-plus" id="+btn2nd"></i></button>
+
+                           </div>
+                           <h5>$ <span id="secondCost">59</span></h5>
+                           <img src="images/remove.png" alt="" class="remove-item" id="secondRemove">
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="cart-item">
+                     <div class="row">
+
+                        <div class="col-md-8">
+                           <h5>Subtotal: </h5>
+                           <h5>Tax:</h5>
+                           <h5>Total:</h5>
+                        </div>
+
+                        <div class="col-md-4 status">
+                           <h5>$ <span id="subtotal">1,278</span></h5>
+                           <h5>$ <span id="tax">0</span> </h5>
+                           <h5>$ <span id="total">1,278</span></h5>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 pt-4 pb-4">
+                     <button type="button" class="btn btn-success check-out" id="Check_Out">Check Out</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="container" id="congrats">
+            <h1> Congratulation</h1>
+            
+         </div>
+      </section>
+      <script>
+         //first +Button handler 
+         const firstPlusBtn = document.getElementById('+btn1st');
+         firstPlusBtn.addEventListener('click', function() {
+            plusBtnFunction ('firstInput');
+            CostEvaluate('firstInput','firstCost',1219);
+            rest();
+         })
+
+         //first -Button handler 
+         const firstMinusBtn = document.getElementById('-btn1st');
+         firstMinusBtn.addEventListener('click', function() {
+            minusBtnFunction ('firstInput');
+            CostEvaluate('firstInput','firstCost',1219);
+            rest();
+         })
+
+         //second +Button handler 
+         const secondPlusBtn = document.getElementById('+btn2nd');
+         secondPlusBtn.addEventListener('click', function() {
+            plusBtnFunction ('secondInput');
+            CostEvaluate('secondInput','secondCost',69);
+            rest();
+         })
+
+         //second -Button handler 
+         const secondMinusBtn = document.getElementById('-btn2nd');
+         secondMinusBtn.addEventListener('click', function() {
+            minusBtnFunction('secondInput');
+            CostEvaluate('secondInput','secondCost',69);
+            rest();
+         })
+
+
+      
+         // function for +Button     
+         function plusBtnFunction (id) {
+            let tem = document.getElementById(id).value;
+            let tem2 = parseFloat(tem);
+            let tem3 = tem2+1;
+            document.getElementById(id).value = tem3; 
+         }
+         // function for -Button 
+         function minusBtnFunction (id) {
+            let tem = document.getElementById(id).value;
+            let tem2 = parseFloat(tem);
+            document.getElementById(id).value = tem2-1;
+            if(document.getElementById(id).value < 0 ) {             //condition for not for neg(-)
+               document.getElementById(id).value = 0;
+            }
+         } 
+         function CostEvaluate(id,id2,id3) {         //input class, CostNo, iPhoneValue/CaseValue
+            let tem4 = document.getElementById(id).value;
+
+            document.getElementById(id2).innerText = tem4 * id3 ;
+         }
+
+               
+         function rest() {
+            let iPhoneCost = parseFloat(document.getElementById('firstCost').innerText); // iPhoneCost Float X 
+            console.log(iPhoneCost);
+            let caseCost = parseFloat(document.getElementById('secondCost').innerText);
+            console.log(caseCost);
+            let subtotal = iPhoneCost + caseCost;
+            console.log(subtotal);
+            document.getElementById('subtotal').innerText= subtotal; 
+            let tax = subtotal * .05;
+            console.log(tax);
+            document.getElementById('tax').innerText= tax;
+
+            let total = subtotal + tax;
+            document.getElementById('total').innerText = total;
+         }
+         const firstRemove = document.getElementById('firstRemove');
+         firstRemove.addEventListener('click', function () {
+            document.getElementById('firstItem').style.display = 'none';
+            document.getElementById('firstCost').innerText = 0;
+            rest();
+         })
+         const secondRemove = document.getElementById('secondRemove');
+         secondRemove.addEventListener('click', function () {
+            document.getElementById('secondItem').style.display = 'none';
+            document.getElementById('secondCost').innerText = 0;
+            rest();
+         })
+         const check_out = document.getElementById('Check_Out');
+         check_out.addEventListener('click', function () {
+            document.getElementById('order').style.display = 'none';
+            document.getElementById('congrats').style.display = 'block';
+         })
+            
+      </script>
+   </body>
+
+</html>
